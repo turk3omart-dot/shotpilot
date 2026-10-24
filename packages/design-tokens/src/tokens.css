@@ -1,0 +1,92 @@
+/*
+ * ShotPilot design tokens.
+ * Brand idea: "tungsten on slate" — warm practical-light amber against cool graphite,
+ * like a lamp on a dark stage. Light content surfaces, a darker navigation rail.
+ */
+:root {
+  --sp-font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", "Noto Sans Arabic", "Geeza Pro", system-ui, sans-serif;
+  --sp-font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  --sp-bg: #f6f5f2;
+  --sp-surface: #ffffff;
+  --sp-surface-2: #f0eee9;
+  --sp-border: #e3e0d8;
+  --sp-border-strong: #cfcbc0;
+  --sp-text: #1b1d22;
+  --sp-text-2: #555a66;
+  --sp-text-3: #8a8f99;
+
+  --sp-rail: #16181d;
+  --sp-rail-2: #20232a;
+  --sp-rail-text: #e9e7e1;
+  --sp-rail-text-2: #9ca1ab;
+
+  --sp-accent: #d9822b;        /* tungsten */
+  --sp-accent-strong: #b8661a;
+  --sp-accent-soft: #fbeedd;
+  --sp-accent-contrast: #1b1209;
+
+  --sp-info: #2f6fde;
+  --sp-info-soft: #e6eefc;
+  --sp-ok: #1f8a5b;
+  --sp-ok-soft: #e2f4ea;
+  --sp-warn: #b7791f;
+  --sp-warn-soft: #fbf1dc;
+  --sp-danger: #c2412d;
+  --sp-danger-soft: #fbe6e2;
+  --sp-ai: #7c4dde;            /* AI-generated content is always marked in violet */
+  --sp-ai-soft: #efe8fc;
+
+  --sp-radius-sm: 6px;
+  --sp-radius: 10px;
+  --sp-radius-lg: 14px;
+  --sp-shadow-sm: 0 1px 2px rgb(20 20 30 / 0.06);
+  --sp-shadow: 0 1px 2px rgb(20 20 30 / 0.05), 0 4px 16px rgb(20 20 30 / 0.06);
+  --sp-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sp-duration: 160ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sp-bg: #111317;
+    --sp-surface: #181b20;
+    --sp-surface-2: #1f2329;
+    --sp-border: #2a2f37;
+    --sp-border-strong: #3a404a;
+    --sp-text: #ecebe7;
+    --sp-text-2: #a9aeb8;
+    --sp-text-3: #747a85;
+    --sp-rail: #0b0c0f;
+    --sp-rail-2: #16181d;
+    --sp-accent: #f0a04b;
+    --sp-accent-strong: #f5b46b;
+    --sp-accent-soft: #3a2a17;
+    --sp-info-soft: #17243b;
+    --sp-ok-soft: #13291f;
+    --sp-warn-soft: #33270f;
+    --sp-danger-soft: #3a1a15;
+    --sp-ai: #a688f0;
+    --sp-ai-soft: #251c3b;
+  }
+}
+:root[data-theme="dark"] {
+  --sp-bg: #111317;
+  --sp-surface: #181b20;
+  --sp-surface-2: #1f2329;
+  --sp-border: #2a2f37;
+  --sp-border-strong: #3a404a;
+  --sp-text: #ecebe7;
+  --sp-text-2: #a9aeb8;
+  --sp-text-3: #747a85;
+  --sp-rail: #0b0c0f;
+  --sp-rail-2: #16181d;
+  --sp-accent: #f0a04b;
+  --sp-accent-strong: #f5b46b;
+  --sp-accent-soft: #3a2a17;
+  --sp-info-soft: #17243b;
+  --sp-ok-soft: #13291f;
+  --sp-warn-soft: #33270f;
+  --sp-danger-soft: #3a1a15;
+  --sp-ai: #a688f0;
+  --sp-ai-soft: #251c3b;
+}

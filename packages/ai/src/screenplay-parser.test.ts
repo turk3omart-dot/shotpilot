@@ -7,7 +7,7 @@ const script = readFileSync(new URL("../../../tests/fixtures/the-last-light.foun
 
 describe("parseHeading", () => {
   it("parses numbered INT/EXT headings with time of day", () => {
-    expect(parseHeading("12A EXT. AL-ULA DESERT ROAD - DAWN 12A")).toMatchObject({ number: "12A", intExt: "EXT", location: "AL-ULA DESERT ROAD", timeOfDay: "DAWN" });
+    expect(parseHeading("12A EXT. AL-ULA DESERT ROAD - DAWN 12A")).toMatchObject({ number: "12A", heading: "EXT. AL-ULA DESERT ROAD - DAWN", intExt: "EXT", location: "AL-ULA DESERT ROAD", timeOfDay: "DAWN" });
     expect(parseHeading("INT./EXT. CAR - NIGHT")).toMatchObject({ intExt: "INT/EXT", location: "CAR", timeOfDay: "NIGHT" });
   });
   it("parses Arabic headings", () => {

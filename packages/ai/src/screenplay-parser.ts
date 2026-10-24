@@ -101,7 +101,8 @@ export function parseHeading(line: string): { number?: string; intExt: IntExt; l
   let m = trimmed.match(HEADING_RE);
   if (m && trimmed === trimmed.toUpperCase()) {
     const { location, timeOfDay } = splitLocationAndTime(m[3]!);
-    return { number: m[1], intExt: intExtFrom(m[2]!), location, timeOfDay, heading: trimmed };
+    // Heading without the scene numbers that screenplays print on both margins.
+    return { number: m[1], intExt: intExtFrom(m[2]!), location, timeOfDay, heading: `${m[2]!.trim()} ${m[3]}`.replace(/\s+/g, " ") };
   }
   m = trimmed.match(AR_HEADING_RE);
   if (m) {

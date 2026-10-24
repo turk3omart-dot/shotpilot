@@ -161,7 +161,7 @@ export function estimateProduction(input: EstimationInput, scenario: Scenario, r
   const missingRates = new Set<string>();
   const assumptions: string[] = [];
 
-  const add = (section: EstimateLine["section"], rateKey: string, quantity: number, units: number, basis: string) => {
+  const add = (section: EstimateLine["section"], rateKey: string, quantity: number, units: number, basis: string, label?: string) => {
     if (quantity <= 0 || units <= 0) return;
     const r = rates.get(rateKey);
     if (!r) {
@@ -172,7 +172,7 @@ export function estimateProduction(input: EstimationInput, scenario: Scenario, r
     lines.push({
       section: sec,
       category: r.category,
-      label: r.label,
+      label: label ?? r.label,
       rateKey,
       quantity,
       units,
@@ -214,7 +214,7 @@ export function estimateProduction(input: EstimationInput, scenario: Scenario, r
     if (!charScenes.length) continue;
     const charPages = charScenes.reduce((n, s) => n + s.lineCount, 0) / LINES_PER_PAGE;
     const days = Math.min(shootDays, Math.max(1, Math.ceil(charPages / R.pagesPerDay), Math.ceil(new Set(charScenes.map((s) => s.locationKey)).size / R.maxLocationsPerDay)));
-    add("production", "cast.principal", 1, days, `${name}: ${charScenes.length} scene(s) → ${days} day(s)`);
+    add("production", "cast.principal", 1, days, `${charScenes.length} scene(s) → ${days} day(s)`, `Principal cast — ${name}`);
     headcount += 1;
   }
 

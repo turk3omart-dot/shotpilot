@@ -235,3 +235,23 @@ export async function updateBudgetLine(ctx: ServiceContext, lineId: string, expe
 }
 
 
+
+/** Side-by-side Lean / Standard / Premium totals for a breakdown, without saving anything. */
+export async function previewScenarios(ctx: ServiceContext, projectId: string, breakdownId: string) {
+  const pa = await requireProject(ctx, projectId, "budget", "view");
+  await requireProject(ctx, projectId, "breakdown", "view");
+  const bd = await ctx.db.query.breakdowns.findFirst({ where: and(eq(breakdowns.id, breakdownId), eq(breakdowns.projectId, projectId)) });
+  if (!bd) throw notFound("Breakdown");
+  const card = await pickRateCard(ctx.db, pa.project.workspaceId, pa.project.country, pa.project.currency);
+  const items = await ctx.db.select().from(rateCardItems).where(eq(rateCardItems.rateCardId, card.id));
+  const rates: RateMap = new Map(items.map((i) => [i.key, { rate: i.rate, unit: i.unit, label: i.label, category: i.category }]));
+  const input = await loadEstimationInput(ctx.db, bd.id, pa.project.country, pa.project.currency);
+  return {
+    rateCardIsSample: card.isSample,
+    rateCardName: card.name,
+    scenarios: (["lean", "standard", "premium"] as const).map((s) => {
+      const e = estimateProduction(input, s, rates);
+      return { scenario: s, shootDays: e.shootDays, headcount: e.headcount, subtotal: e.subtotal, total: e.total, lineCount: e.lines.length };
+    }),
+  };
+}
