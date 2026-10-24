@@ -17,7 +17,7 @@
     "test:e2e": "pnpm --filter @shotpilot/web test:e2e",
     "db:generate": "pnpm --filter @shotpilot/database generate",
     "db:migrate": "pnpm --filter @shotpilot/database migrate",
-    "db:seed": "pnpm --filter @shotpilot/database seed",
+    "db:seed": "tsx scripts/seed-demo.ts",
     "db:setup": "bash scripts/setup-db.sh"
   },
   "devDependencies": {
@@ -30,7 +30,8 @@
     "@shotpilot/ai": "workspace:*",
     "@shotpilot/api": "workspace:*",
     "@shotpilot/database": "workspace:*",
-    "@shotpilot/shared": "workspace:*"
+    "@shotpilot/shared": "workspace:*",
+    "tsx": "^4.19.0"
   },
   "type": "module"
 }

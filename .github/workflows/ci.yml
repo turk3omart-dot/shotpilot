@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: shotpilot
+          POSTGRES_PASSWORD: shotpilot
+          POSTGRES_DB: shotpilot_dev
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U shotpilot" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://shotpilot:shotpilot@localhost:5432/shotpilot_dev
+      TEST_DATABASE_URL: postgres://shotpilot:shotpilot@localhost:5432/shotpilot_test
+      SHOTPILOT_AI_PROVIDER: heuristic
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: PGPASSWORD=shotpilot psql -h localhost -U shotpilot -d shotpilot_dev -c "CREATE DATABASE shotpilot_test"
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm db:migrate
+      - run: pnpm build
+      - run: pnpm --filter @shotpilot/web exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: apps/web/test-results
