@@ -1,10 +1,7 @@
 # Next steps
 
-## 0. Repository (owner action)
-If the private GitHub repo doesn't exist yet:
-1. On github.com create a **private**, **empty** repository named `shotpilot` (no README, .gitignore or license).
-2. Make sure the Claude GitHub App has access to it (github.com/apps/claude → Configure → repository access).
-3. Ask Claude to push: "Attach turk3omart-dot/shotpilot and push the local ShotPilot repo to main."
+## 0. Repository
+Hosted at https://github.com/turk3omart-dot/shotpilot (private). Check the first CI run and fix anything it reports before starting new work.
 
 ## 1. Immediate engineering tasks (in order)
 1. **Durable jobs:** add `pg-boss` (same Postgres), a worker entry point, retry with backoff, and recovery of stale `running` jobs. Keep `ai_jobs` as the user-facing record.

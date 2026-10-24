@@ -22,7 +22,7 @@ Phases 0–1 are done, and Phase 2 has a working vertical slice: **create worksp
 - **Crew invitations.** You can only add *existing* accounts; there are no email invites yet.
 - **Arabic.** RTL layout, Arabic heading parsing and the dictionary exist, but most UI strings are still English literals. The language toggle switches direction and locale.
 - **iOS.** SwiftUI source scaffold only; **not compiled** (no Xcode in the cloud environment).
-- **CI workflow.** Written, but not yet run on GitHub.
+- **CI workflow.** First run triggered on push; result not yet reviewed.
 
 ## Not started
 Scheduling, call sheets, shot lists, locations module, equipment, chat, notifications, approvals, live production, post-production, delivery, analytics, billing (see IMPLEMENTATION_PLAN.md).
@@ -42,8 +42,8 @@ Scheduling, call sheets, shot lists, locations module, equipment, chat, notifica
 - `pnpm test:e2e`: **10/10 passed** (vertical slice + auth redirect + API, on desktop and mobile Chromium).
 
 ## Repository
-- Local git repository with commits on `main`.
-- Remote: **not yet pushed.** The cloud session's GitHub integration couldn't create repositories (403). The owner must create an empty private repo `shotpilot`; then it is pushed. See NEXT_STEPS.md §0.
+- Private GitHub repo: https://github.com/turk3omart-dot/shotpilot (`main`).
+- First CI run started on commit 4dc2739; check the Actions tab for its result.
 
 ## Latest validated commit
 See `git log -1` on `main`: the commit titled "Docs, demo seed, JSON API, CI, iOS scaffold", which ran all the checks above.

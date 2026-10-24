@@ -14,4 +14,4 @@ Format: **ID — decision** · why · alternatives considered.
 - **D10 — Optimistic concurrency (`version` columns).** Simple, explicit conflicts; real-time co-editing (CRDT) only where it's truly needed later.
 - **D11 — Background jobs via `after()` for now, pg-boss next.** Fastest path to a working slice; the job table is already queue-shaped.
 - **D12 — Integration tests against real Postgres** (wiped `*_test` DB, with a safety check on the name) rather than mocks.
-- **D13 — Repo hosting.** The cloud session couldn't create a GitHub repo (integration lacks permission), so the owner creates the private `shotpilot` repo and it is pushed from the session.
+- **D13 — Repo hosting.** The cloud session could not create a GitHub repo (integration lacks permission), so the owner created the private `shotpilot` repo and the session pushed to it.
