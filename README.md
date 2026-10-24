@@ -35,6 +35,9 @@
 
 Also built and tested but not yet shown in the interface: shooting-day scheduling and versioned call sheets with share links.
 
+## Try it in the browser
+A working, clickable version lives in `apps/preview` (rebuild with `pnpm preview:build`). It runs entirely in one web page using the real parser, budget, scheduling and permission code. It has no accounts or shared database, and data stays in your browser.
+
 ## Run it
 The easy way is to ask Claude Code to start it for you, or follow [SETUP_LOCAL.md](SETUP_LOCAL.md). It needs a computer with Node.js and PostgreSQL; GitHub itself cannot run it.
 

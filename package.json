@@ -18,7 +18,8 @@
     "db:generate": "pnpm --filter @shotpilot/database generate",
     "db:migrate": "pnpm --filter @shotpilot/database migrate",
     "db:seed": "tsx scripts/seed-demo.ts",
-    "db:setup": "bash scripts/setup-db.sh"
+    "db:setup": "bash scripts/setup-db.sh",
+    "preview:build": "pnpm --filter @shotpilot/preview build"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
@@ -31,7 +32,8 @@
     "@shotpilot/api": "workspace:*",
     "@shotpilot/database": "workspace:*",
     "@shotpilot/shared": "workspace:*",
-    "tsx": "^4.19.0"
+    "tsx": "^4.19.0",
+    "esbuild": "^0.25.0"
   },
   "type": "module"
 }
