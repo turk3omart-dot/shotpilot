@@ -15,6 +15,7 @@
 import { sql } from "drizzle-orm";
 import {
   bigint,
+  date,
   boolean,
   index,
   integer,
@@ -538,4 +539,88 @@ export const auditEvents = pgTable(
     createdAt: createdAt(),
   },
   (t) => [index("audit_events_project_idx").on(t.projectId, t.createdAt)],
+);
+
+/* ------------------------------- Scheduling ------------------------------ */
+
+
+
+export const shootingDays = pgTable(
+  "shooting_days",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    projectId: uuid("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    breakdownId: uuid("breakdown_id").references(() => breakdowns.id),
+    dayNumber: integer("day_number").notNull(),
+    shootDate: date("shoot_date", { mode: "string" }).notNull(),
+    generalCall: text("general_call").notNull().default("07:00"), // HH:MM, local to the production
+    wrapTarget: text("wrap_target").notNull().default("17:00"),
+    notes: text("notes"),
+    version: integer("version").notNull().default(1),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index("shooting_days_project_idx").on(t.projectId, t.shootDate)],
+);
+
+export const scheduleItems = pgTable(
+  "schedule_items",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    projectId: uuid("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    shootingDayId: uuid("shooting_day_id")
+      .notNull()
+      .references(() => shootingDays.id, { onDelete: "cascade" }),
+    sceneId: uuid("scene_id")
+      .notNull()
+      .references(() => scenes.id, { onDelete: "cascade" }),
+    sortOrder: integer("sort_order").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    uniqueIndex("schedule_items_scene_idx").on(t.sceneId),
+    index("schedule_items_day_idx").on(t.shootingDayId, t.sortOrder),
+  ],
+);
+
+/** Immutable snapshot per revision. Content is frozen at generation time. */
+export const callSheets = pgTable(
+  "call_sheets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    projectId: uuid("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    shootingDayId: uuid("shooting_day_id")
+      .notNull()
+      .references(() => shootingDays.id, { onDelete: "cascade" }),
+    revision: integer("revision").notNull(),
+    content: jsonb("content").$type<Record<string, unknown>>().notNull(),
+    contentHash: text("content_hash").notNull(),
+    shareTokenHash: text("share_token_hash"),
+    shareExpiresAt: ts("share_expires_at"),
+    createdBy: uuid("created_by")
+      .notNull()
+      .references(() => users.id),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("call_sheets_day_rev_idx").on(t.shootingDayId, t.revision), index("call_sheets_share_idx").on(t.shareTokenHash)],
+);
+
+export const callSheetAcks = pgTable(
+  "call_sheet_acks",
+  {
+    callSheetId: uuid("call_sheet_id")
+      .notNull()
+      .references(() => callSheets.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    ackedAt: createdAt(),
+  },
+  (t) => [primaryKey({ columns: [t.callSheetId, t.userId] })],
 );
