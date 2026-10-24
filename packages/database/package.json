@@ -1,0 +1,21 @@
+{
+  "name": "@shotpilot/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts", "./schema": "./src/schema/index.ts" },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "generate": "drizzle-kit generate",
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.0",
+    "postgres": "^3.4.5",
+    "@shotpilot/shared": "workspace:*"
+  },
+  "devDependencies": { "drizzle-kit": "^0.31.0", "tsx": "^4.19.0" }
+}

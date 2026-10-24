@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+.data/
+*.log
+.DS_Store
+playwright-report/
+test-results/
+*.tsbuildinfo
+next-env.d.ts
+# iOS
+apps/ios/**/xcuserdata/
+apps/ios/**/DerivedData/
+apps/ios/build/

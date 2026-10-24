@@ -1,0 +1,36 @@
+{
+  "name": "shotpilot",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ShotPilot \u2014 AI-powered end-to-end production operating system",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @shotpilot/web dev",
+    "build": "pnpm --filter @shotpilot/web build",
+    "start": "pnpm --filter @shotpilot/web start",
+    "typecheck": "pnpm -r --parallel typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "pnpm --filter @shotpilot/web test:e2e",
+    "db:generate": "pnpm --filter @shotpilot/database generate",
+    "db:migrate": "pnpm --filter @shotpilot/database migrate",
+    "db:seed": "pnpm --filter @shotpilot/database seed",
+    "db:setup": "bash scripts/setup-db.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0",
+    "dotenv": "^17.0.0",
+    "postgres": "^3.4.5",
+    "drizzle-orm": "^0.45.0",
+    "@shotpilot/ai": "workspace:*",
+    "@shotpilot/api": "workspace:*",
+    "@shotpilot/database": "workspace:*",
+    "@shotpilot/shared": "workspace:*"
+  },
+  "type": "module"
+}
